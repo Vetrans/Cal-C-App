@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Advanced Calculator</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="container">
+    <h1 class="animated-title">Smart Calculator</h1>
+    <input type="text" class="display" placeholder="0" readonly>
+
+<!-- Calculator Grid -->
+<div class="buttons">
+    <!-- Row 1 -->
+    <button onclick="clearDisplay()">C</button>
+    <button onclick="deleteLast()">⌫</button>
+    <button onclick="append('%')">%</button>
+    <button onclick="append('/')">÷</button>
+  
+    <!-- Row 2 -->
+    <button onclick="append('7')">7</button>
+    <button onclick="append('8')">8</button>
+    <button onclick="append('9')">9</button>
+    <button onclick="append('*')">×</button>
+  
+    <!-- Row 3 -->
+    <button onclick="append('4')">4</button>
+    <button onclick="append('5')">5</button>
+    <button onclick="append('6')">6</button>
+    <button onclick="append('-')">−</button>
+  
+    <!-- Row 4 -->
+    <button onclick="append('1')">1</button>
+    <button onclick="append('2')">2</button>
+    <button onclick="append('3')">3</button>
+    <button onclick="append('+')">+</button>
+  
+    <!-- Row 5 -->
+    <button onclick="append('0')" class="wide-btn">0</button>
+    <button onclick="append('.')">.</button>
+    <button onclick="calculate()">=</button>
+  </div>
+  
+  <div class="sci-buttons">
+    <button class="calc-button" onclick="append('(')">(</button>
+    <button class="calc-button" onclick="append(')')">)</button>
+    <button class="calc-button" onclick="append('sin(')">sin</button>
+    <button class="calc-button" onclick="append('cos(')">cos</button>
+    <button class="calc-button" onclick="append('tan(')">tan</button>
+    <button class="calc-button" onclick="append('sqrt(')">√</button>
+    <button class="calc-button" onclick="append('log(')">log</button>
+    <button class="calc-button" onclick="append('ln(')">ln</button>
+  </div>
+  
+  
+
+    <!-- CTA Buttons -->
+    <div class="cta-buttons">
+      <button onclick="togglePanel('geometry')">📏 Geometry</button>
+      <button onclick="togglePanel('algebra')">📐 Algebra</button>
+      <button onclick="togglePanel('history')">🕒 History</button>
+    </div>
+
+   <!-- Geometry Panel -->
+<div id="geometry-panel" class="panel">
+    <h3>Geometry Tools</h3>
+  
+    <select onchange="showGeometrySection(this.value)">
+      <option value="">Choose a tool</option>
+      <option value="geo-circle">Circle Area</option>
+      <option value="geo-rectangle">Rectangle Area</option>
+      <option value="geo-pythagoras">Pythagorean Theorem</option>
+      <option value="geo-cylinder">Cylinder Volume</option>
+      <option value="geo-sphere">Sphere Surface Area</option>
+    </select>
+  
+    <div id="geo-circle" class="geometry-tool hidden">
+      <label>Radius: <input type="number" id="circle-radius"></label>
+      <button onclick="calcCircleArea()">Calculate</button>
+    </div>
+  
+    <div id="geo-rectangle" class="geometry-tool hidden">
+      <label>Length: <input type="number" id="rect-length"></label>
+      <label>Width: <input type="number" id="rect-width"></label>
+      <button onclick="calcRectangleArea()">Calculate</button>
+    </div>
+  
+    <div id="geo-pythagoras" class="geometry-tool hidden">
+      <label>a: <input type="number" id="pyth-a"></label>
+      <label>b: <input type="number" id="pyth-b"></label>
+      <button onclick="calcHypotenuse()">Calculate</button>
+    </div>
+  
+    <div id="geo-cylinder" class="geometry-tool hidden">
+      <label>Radius: <input type="number" id="cylinder-radius"></label>
+      <label>Height: <input type="number" id="cylinder-height"></label>
+      <button onclick="calcCylinderVolume()">Calculate</button>
+    </div>
+  
+    <div id="geo-sphere" class="geometry-tool hidden">
+      <label>Radius: <input type="number" id="sphere-radius"></label>
+      <button onclick="calcSphereSurfaceArea()">Calculate</button>
+    </div>
+  
+    <div class="answer" id="geometry-result"></div>
+  </div>
+  
+
+    <!-- Algebra Panel -->
+    <div id="algebra-panel" class="panel">
+      <h3>Algebra Tools</h3>
+      <select onchange="showAlgebraSection(this.value)">
+        <option value="">Choose a tool</option>
+        <option value="quad">Quadratic</option>
+        <option value="linear">Linear Equation</option>
+        <option value="simplify">Simplify</option>
+      </select>
+
+      <div id="quad" class="algebra-tool hidden">
+        <label>a: <input type="number" id="quad-a"></label>
+        <label>b: <input type="number" id="quad-b"></label>
+        <label>c: <input type="number" id="quad-c"></label>
+        <button onclick="solveQuadratic()">Solve</button>
+      </div>
+
+      <div id="linear" class="algebra-tool hidden">
+        <input type="text" id="linear-equation" placeholder="e.g., 2x+4=10">
+        <button onclick="solveLinear()">Solve</button>
+      </div>
+
+      <div id="simplify" class="algebra-tool hidden">
+        <input type="text" id="algebra-expression" placeholder="e.g., 2+3*4">
+        <button onclick="simplifyExpression()">Simplify</button>
+      </div>
+
+      <div class="answer" id="algebra-result"></div>
+    </div>
+
+    <!-- History Panel -->
+    <div id="history-panel" class="panel">
+      <h3>Calculation History</h3>
+      <ul id="history-list"></ul>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
