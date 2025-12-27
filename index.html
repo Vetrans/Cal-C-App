@@ -2,146 +2,277 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Advanced Calculator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quantum Calculator Pro</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-  <div class="container">
-    <h1 class="animated-title">Smart Calculator</h1>
-    <input type="text" class="display" placeholder="0" readonly>
-
-<!-- Calculator Grid -->
-<div class="buttons">
-    <!-- Row 1 -->
-    <button onclick="clearDisplay()">C</button>
-    <button onclick="deleteLast()">⌫</button>
-    <button onclick="append('%')">%</button>
-    <button onclick="append('/')">÷</button>
-  
-    <!-- Row 2 -->
-    <button onclick="append('7')">7</button>
-    <button onclick="append('8')">8</button>
-    <button onclick="append('9')">9</button>
-    <button onclick="append('*')">×</button>
-  
-    <!-- Row 3 -->
-    <button onclick="append('4')">4</button>
-    <button onclick="append('5')">5</button>
-    <button onclick="append('6')">6</button>
-    <button onclick="append('-')">−</button>
-  
-    <!-- Row 4 -->
-    <button onclick="append('1')">1</button>
-    <button onclick="append('2')">2</button>
-    <button onclick="append('3')">3</button>
-    <button onclick="append('+')">+</button>
-  
-    <!-- Row 5 -->
-    <button onclick="append('0')" class="wide-btn">0</button>
-    <button onclick="append('.')">.</button>
-    <button onclick="calculate()">=</button>
+  <div class="background-animation">
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
   </div>
-  
-  <div class="sci-buttons">
-    <button class="calc-button" onclick="append('(')">(</button>
-    <button class="calc-button" onclick="append(')')">)</button>
-    <button class="calc-button" onclick="append('sin(')">sin</button>
-    <button class="calc-button" onclick="append('cos(')">cos</button>
-    <button class="calc-button" onclick="append('tan(')">tan</button>
-    <button class="calc-button" onclick="append('sqrt(')">√</button>
-    <button class="calc-button" onclick="append('log(')">log</button>
-    <button class="calc-button" onclick="append('ln(')">ln</button>
-  </div>
-  
-  
 
-    <!-- CTA Buttons -->
-    <div class="cta-buttons">
-      <button onclick="togglePanel('geometry')">📏 Geometry</button>
-      <button onclick="togglePanel('algebra')">📐 Algebra</button>
-      <button onclick="togglePanel('history')">🕒 History</button>
-    </div>
+  <div class="main-container">
+    <!-- Header Section -->
+    <header class="calc-header">
+      <div class="logo-container">
+        <div class="logo-icon">∑</div>
+        <h1 class="app-title">Quantum Calculator</h1>
+      </div>
+      <div class="mode-toggle">
+        <button class="mode-btn active" data-mode="basic">Basic</button>
+        <button class="mode-btn" data-mode="scientific">Scientific</button>
+        <button class="mode-btn" data-mode="programmer">Programmer</button>
+      </div>
+    </header>
 
-   <!-- Geometry Panel -->
-<div id="geometry-panel" class="panel">
-    <h3>Geometry Tools</h3>
-  
-    <select onchange="showGeometrySection(this.value)">
-      <option value="">Choose a tool</option>
-      <option value="geo-circle">Circle Area</option>
-      <option value="geo-rectangle">Rectangle Area</option>
-      <option value="geo-pythagoras">Pythagorean Theorem</option>
-      <option value="geo-cylinder">Cylinder Volume</option>
-      <option value="geo-sphere">Sphere Surface Area</option>
-    </select>
-  
-    <div id="geo-circle" class="geometry-tool hidden">
-      <label>Radius: <input type="number" id="circle-radius"></label>
-      <button onclick="calcCircleArea()">Calculate</button>
-    </div>
-  
-    <div id="geo-rectangle" class="geometry-tool hidden">
-      <label>Length: <input type="number" id="rect-length"></label>
-      <label>Width: <input type="number" id="rect-width"></label>
-      <button onclick="calcRectangleArea()">Calculate</button>
-    </div>
-  
-    <div id="geo-pythagoras" class="geometry-tool hidden">
-      <label>a: <input type="number" id="pyth-a"></label>
-      <label>b: <input type="number" id="pyth-b"></label>
-      <button onclick="calcHypotenuse()">Calculate</button>
-    </div>
-  
-    <div id="geo-cylinder" class="geometry-tool hidden">
-      <label>Radius: <input type="number" id="cylinder-radius"></label>
-      <label>Height: <input type="number" id="cylinder-height"></label>
-      <button onclick="calcCylinderVolume()">Calculate</button>
-    </div>
-  
-    <div id="geo-sphere" class="geometry-tool hidden">
-      <label>Radius: <input type="number" id="sphere-radius"></label>
-      <button onclick="calcSphereSurfaceArea()">Calculate</button>
-    </div>
-  
-    <div class="answer" id="geometry-result"></div>
-  </div>
-  
-
-    <!-- Algebra Panel -->
-    <div id="algebra-panel" class="panel">
-      <h3>Algebra Tools</h3>
-      <select onchange="showAlgebraSection(this.value)">
-        <option value="">Choose a tool</option>
-        <option value="quad">Quadratic</option>
-        <option value="linear">Linear Equation</option>
-        <option value="simplify">Simplify</option>
-      </select>
-
-      <div id="quad" class="algebra-tool hidden">
-        <label>a: <input type="number" id="quad-a"></label>
-        <label>b: <input type="number" id="quad-b"></label>
-        <label>c: <input type="number" id="quad-c"></label>
-        <button onclick="solveQuadratic()">Solve</button>
+    <!-- Calculator Container -->
+    <div class="calculator-wrapper">
+      <!-- Display Section -->
+      <div class="display-section">
+        <div class="expression-display" id="expression">0</div>
+        <div class="result-display" id="result">0</div>
+        <div class="memory-indicator" id="memory-indicator"></div>
       </div>
 
-      <div id="linear" class="algebra-tool hidden">
-        <input type="text" id="linear-equation" placeholder="e.g., 2x+4=10">
-        <button onclick="solveLinear()">Solve</button>
+      <!-- Mode Panels -->
+      <div class="mode-panel active" id="basic-panel">
+        <div class="button-grid basic-grid">
+          <button class="btn function-btn" onclick="clearAll()">AC</button>
+          <button class="btn function-btn" onclick="clearEntry()">CE</button>
+          <button class="btn function-btn" onclick="backspace()">⌫</button>
+          <button class="btn operator-btn" onclick="inputOperator('/')">÷</button>
+          
+          <button class="btn number-btn" onclick="inputNumber('7')">7</button>
+          <button class="btn number-btn" onclick="inputNumber('8')">8</button>
+          <button class="btn number-btn" onclick="inputNumber('9')">9</button>
+          <button class="btn operator-btn" onclick="inputOperator('*')">×</button>
+          
+          <button class="btn number-btn" onclick="inputNumber('4')">4</button>
+          <button class="btn number-btn" onclick="inputNumber('5')">5</button>
+          <button class="btn number-btn" onclick="inputNumber('6')">6</button>
+          <button class="btn operator-btn" onclick="inputOperator('-')">−</button>
+          
+          <button class="btn number-btn" onclick="inputNumber('1')">1</button>
+          <button class="btn number-btn" onclick="inputNumber('2')">2</button>
+          <button class="btn number-btn" onclick="inputNumber('3')">3</button>
+          <button class="btn operator-btn" onclick="inputOperator('+')">+</button>
+          
+          <button class="btn number-btn span-2" onclick="inputNumber('0')">0</button>
+          <button class="btn number-btn" onclick="inputNumber('.')">.</button>
+          <button class="btn equals-btn" onclick="calculate()">=</button>
+        </div>
       </div>
 
-      <div id="simplify" class="algebra-tool hidden">
-        <input type="text" id="algebra-expression" placeholder="e.g., 2+3*4">
-        <button onclick="simplifyExpression()">Simplify</button>
+      <div class="mode-panel" id="scientific-panel">
+        <div class="button-grid scientific-grid">
+          <button class="btn function-btn" onclick="inputFunction('sin(')">sin</button>
+          <button class="btn function-btn" onclick="inputFunction('cos(')">cos</button>
+          <button class="btn function-btn" onclick="inputFunction('tan(')">tan</button>
+          <button class="btn function-btn" onclick="inputFunction('log(')">log</button>
+          <button class="btn function-btn" onclick="inputFunction('ln(')">ln</button>
+          
+          <button class="btn function-btn" onclick="inputFunction('asin(')">asin</button>
+          <button class="btn function-btn" onclick="inputFunction('acos(')">acos</button>
+          <button class="btn function-btn" onclick="inputFunction('atan(')">atan</button>
+          <button class="btn function-btn" onclick="inputFunction('sqrt(')">√</button>
+          <button class="btn function-btn" onclick="inputOperator('^')">x^y</button>
+          
+          <button class="btn number-btn" onclick="inputNumber('7')">7</button>
+          <button class="btn number-btn" onclick="inputNumber('8')">8</button>
+          <button class="btn number-btn" onclick="inputNumber('9')">9</button>
+          <button class="btn operator-btn" onclick="inputOperator('/')">/</button>
+          <button class="btn function-btn" onclick="inputOperator('%')">%</button>
+          
+          <button class="btn number-btn" onclick="inputNumber('4')">4</button>
+          <button class="btn number-btn" onclick="inputNumber('5')">5</button>
+          <button class="btn number-btn" onclick="inputNumber('6')">6</button>
+          <button class="btn operator-btn" onclick="inputOperator('*')">×</button>
+          <button class="btn function-btn" onclick="factorial()">n!</button>
+          
+          <button class="btn number-btn" onclick="inputNumber('1')">1</button>
+          <button class="btn number-btn" onclick="inputNumber('2')">2</button>
+          <button class="btn number-btn" onclick="inputNumber('3')">3</button>
+          <button class="btn operator-btn" onclick="inputOperator('-')">−</button>
+          <button class="btn function-btn" onclick="inputNumber('(')">(</button>
+          
+          <button class="btn number-btn" onclick="inputNumber('0')">0</button>
+          <button class="btn number-btn" onclick="inputNumber('.')">.</button>
+          <button class="btn constant-btn" onclick="inputConstant('PI')">π</button>
+          <button class="btn operator-btn" onclick="inputOperator('+')">+</button>
+          <button class="btn function-btn" onclick="inputNumber(')')">)</button>
+          
+          <button class="btn equals-btn span-5" onclick="calculate()">=</button>
+        </div>
       </div>
 
-      <div class="answer" id="algebra-result"></div>
+      <div class="mode-panel" id="programmer-panel">
+        <div class="number-system-selector">
+          <button class="system-btn active" onclick="changeBase('dec')">DEC</button>
+          <button class="system-btn" onclick="changeBase('bin')">BIN</button>
+          <button class="system-btn" onclick="changeBase('oct')">OCT</button>
+          <button class="system-btn" onclick="changeBase('hex')">HEX</button>
+        </div>
+        <div class="button-grid programmer-grid">
+          <button class="btn function-btn" onclick="bitwiseOp('AND')">AND</button>
+          <button class="btn function-btn" onclick="bitwiseOp('OR')">OR</button>
+          <button class="btn function-btn" onclick="bitwiseOp('XOR')">XOR</button>
+          <button class="btn function-btn" onclick="bitwiseOp('NOT')">NOT</button>
+          
+          <button class="btn hex-btn" onclick="inputNumber('A')">A</button>
+          <button class="btn hex-btn" onclick="inputNumber('B')">B</button>
+          <button class="btn hex-btn" onclick="inputNumber('C')">C</button>
+          <button class="btn hex-btn" onclick="inputNumber('D')">D</button>
+          
+          <button class="btn hex-btn" onclick="inputNumber('E')">E</button>
+          <button class="btn hex-btn" onclick="inputNumber('F')">F</button>
+          <button class="btn function-btn" onclick="shiftLeft()"><<</button>
+          <button class="btn function-btn" onclick="shiftRight()">>></button>
+          
+          <button class="btn number-btn" onclick="inputNumber('7')">7</button>
+          <button class="btn number-btn" onclick="inputNumber('8')">8</button>
+          <button class="btn number-btn" onclick="inputNumber('9')">9</button>
+          <button class="btn operator-btn" onclick="inputOperator('/')">/</button>
+          
+          <button class="btn number-btn" onclick="inputNumber('4')">4</button>
+          <button class="btn number-btn" onclick="inputNumber('5')">5</button>
+          <button class="btn number-btn" onclick="inputNumber('6')">6</button>
+          <button class="btn operator-btn" onclick="inputOperator('*')">×</button>
+          
+          <button class="btn number-btn" onclick="inputNumber('1')">1</button>
+          <button class="btn number-btn" onclick="inputNumber('2')">2</button>
+          <button class="btn number-btn" onclick="inputNumber('3')">3</button>
+          <button class="btn operator-btn" onclick="inputOperator('-')">−</button>
+          
+          <button class="btn number-btn span-2" onclick="inputNumber('0')">0</button>
+          <button class="btn function-btn" onclick="clearAll()">C</button>
+          <button class="btn equals-btn" onclick="calculate()">=</button>
+        </div>
+      </div>
     </div>
 
-    <!-- History Panel -->
-    <div id="history-panel" class="panel">
-      <h3>Calculation History</h3>
-      <ul id="history-list"></ul>
+    <!-- Advanced Tools Section -->
+    <div class="tools-section">
+      <div class="tool-tabs">
+        <button class="tool-tab active" onclick="showTool('geometry')">
+          <span class="tab-icon">📐</span>Geometry
+        </button>
+        <button class="tool-tab" onclick="showTool('algebra')">
+          <span class="tab-icon">🔢</span>Algebra
+        </button>
+        <button class="tool-tab" onclick="showTool('statistics')">
+          <span class="tab-icon">📊</span>Statistics
+        </button>
+        <button class="tool-tab" onclick="showTool('finance')">
+          <span class="tab-icon">💰</span>Finance
+        </button>
+        <button class="tool-tab" onclick="showTool('converter')">
+          <span class="tab-icon">🔄</span>Unit Converter
+        </button>
+        <button class="tool-tab" onclick="showTool('history')">
+          <span class="tab-icon">🕐</span>History
+        </button>
+      </div>
+
+      <!-- Geometry Tool -->
+      <div class="tool-content active" id="geometry-tool">
+        <h3 class="tool-title">Geometry Calculator</h3>
+        <div class="tool-selector">
+          <select id="geometry-type" onchange="showGeometryForm(this.value)">
+            <option value="">Select Shape...</option>
+            <option value="circle">Circle</option>
+            <option value="rectangle">Rectangle</option>
+            <option value="triangle">Triangle</option>
+            <option value="sphere">Sphere</option>
+            <option value="cylinder">Cylinder</option>
+            <option value="cone">Cone</option>
+            <option value="cube">Cube</option>
+          </select>
+        </div>
+        <div id="geometry-forms"></div>
+        <div class="result-box" id="geometry-result"></div>
+      </div>
+
+      <!-- Algebra Tool -->
+      <div class="tool-content" id="algebra-tool">
+        <h3 class="tool-title">Algebra Solver</h3>
+        <div class="tool-selector">
+          <select id="algebra-type" onchange="showAlgebraForm(this.value)">
+            <option value="">Select Problem Type...</option>
+            <option value="quadratic">Quadratic Equation</option>
+            <option value="linear">Linear Equation</option>
+            <option value="simultaneous">Simultaneous Equations</option>
+            <option value="polynomial">Polynomial Roots</option>
+          </select>
+        </div>
+        <div id="algebra-forms"></div>
+        <div class="result-box" id="algebra-result"></div>
+      </div>
+
+      <!-- Statistics Tool -->
+      <div class="tool-content" id="statistics-tool">
+        <h3 class="tool-title">Statistics Calculator</h3>
+        <div class="input-group">
+          <label>Enter Numbers (comma-separated):</label>
+          <textarea id="stats-data" placeholder="1, 2, 3, 4, 5"></textarea>
+          <button class="calc-btn" onclick="calculateStatistics()">Calculate Statistics</button>
+        </div>
+        <div class="result-box" id="statistics-result"></div>
+      </div>
+
+      <!-- Finance Tool -->
+      <div class="tool-content" id="finance-tool">
+        <h3 class="tool-title">Finance Calculator</h3>
+        <div class="tool-selector">
+          <select id="finance-type" onchange="showFinanceForm(this.value)">
+            <option value="">Select Calculation...</option>
+            <option value="loan">Loan Payment</option>
+            <option value="compound">Compound Interest</option>
+            <option value="roi">ROI Calculator</option>
+          </select>
+        </div>
+        <div id="finance-forms"></div>
+        <div class="result-box" id="finance-result"></div>
+      </div>
+
+      <!-- Unit Converter Tool -->
+      <div class="tool-content" id="converter-tool">
+        <h3 class="tool-title">Unit Converter</h3>
+        <div class="tool-selector">
+          <select id="converter-type" onchange="showConverterForm(this.value)">
+            <option value="">Select Unit Type...</option>
+            <option value="length">Length</option>
+            <option value="weight">Weight</option>
+            <option value="temperature">Temperature</option>
+            <option value="area">Area</option>
+            <option value="volume">Volume</option>
+            <option value="speed">Speed</option>
+          </select>
+        </div>
+        <div id="converter-forms"></div>
+        <div class="result-box" id="converter-result"></div>
+      </div>
+
+      <!-- History Tool -->
+      <div class="tool-content" id="history-tool">
+        <h3 class="tool-title">Calculation History</h3>
+        <div class="history-controls">
+          <button class="calc-btn" onclick="clearHistory()">Clear History</button>
+        </div>
+        <ul class="history-list" id="history-list"></ul>
+      </div>
+    </div>
+
+    <!-- Memory Panel -->
+    <div class="memory-panel">
+      <button class="memory-btn" onclick="memoryClear()">MC</button>
+      <button class="memory-btn" onclick="memoryRecall()">MR</button>
+      <button class="memory-btn" onclick="memoryAdd()">M+</button>
+      <button class="memory-btn" onclick="memorySubtract()">M-</button>
+      <button class="memory-btn" onclick="memoryStore()">MS</button>
     </div>
   </div>
 
